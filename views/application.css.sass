@@ -22,7 +22,12 @@ a:hover
   :text-decoration underline
 
 #page
-  :margin 20px auto
+  :margin 0px auto
+  :display table
+  :border-spacing 20px
+
+#info
+  :display table-cell
   :width 70ex
   :text-align left
   :background !white url('/images/noise.png')
@@ -90,3 +95,17 @@ a:hover
     .vr
       :margin 1ex
       :color rgba(0, 0, 0, 0.15)
+#chat
+  :display table-cell
+  :color !white
+  :text-align left
+  :width 30ex
+  input
+    :font-size medium
+  ul
+    :list-style-type none
+    :padding 0
+    :margin 0
+  form
+    :position fixed
+    :bottom 10px

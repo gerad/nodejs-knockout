@@ -21,3 +21,19 @@ get '/*', (file) ->
   @pass "/public/${file}"
 
 server: run parseInt(process.env.PORT || 8000), null
+
+# handle web sockets
+sio: require './lib/socket.io/lib/socket.io'
+buffer: []
+chat: sio.listen server, {
+  resource: 'chat'
+  transports: 'websocket htmlfile xhr-multipart xhr-polling'.split(' ')
+  onClientConnect: (client) ->
+    client.send { buffer: buffer }
+    chat.broadcast { status: "${client.sessionId} connected" }
+  onClientDisconnect: (client) ->
+    chat.broadcast { status: "${client.sessionId} disconnected" }
+  onClientMessage: (message, client) ->
+    chat.broadcast m: { message: message, client: client.sessionId }
+    buffer.push m
+}
